@@ -1,5 +1,5 @@
 beautifulsoup4
-pyqt
+pyqt5
 pyqtwebengine
 pytube
 pyyoutube
