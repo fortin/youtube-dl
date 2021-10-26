@@ -1,0 +1,6 @@
+beautifulsoup4
+pyqt
+pyqtwebengine
+pytube
+pyyoutube
+python-decouple
