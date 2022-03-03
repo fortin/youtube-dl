@@ -51,14 +51,21 @@ def download_videos():
 
         yt_obj = YouTube(link)
 
-        filters = yt_obj.streams.filter(progressive=True, file_extension="mp4")
+        try:
+            filters = yt_obj.streams.filter(progressive=True, file_extension="mp4")
+            
+            # download the highest quality video
+            filters.get_highest_resolution().download("~/YouTube-Downloads/")
 
-        # download the highest quality video
-        filters.get_highest_resolution().download()
+            messagebox.showinfo("Success", "Video Successfully downloaded")
+            download_start.config(state="normal")
+            get_videos.config(state="normal")
 
-    messagebox.showinfo("Success", "Video Successfully downloaded")
-    download_start.config(state="normal")
-    get_videos.config(state="normal")
+        except Exception as e:
+            print(repr(e))
+            break
+
+
 
 
 # Create Object
