@@ -55,7 +55,7 @@ def download_videos():
             filters = yt_obj.streams.filter(progressive=True, file_extension="mp4")
             
             # download the highest quality video
-            filters.get_highest_resolution().download("~/YouTube/")
+            filters.get_highest_resolution().download("Downloads/YouTube/")
 
             messagebox.showinfo("Success", "Video Successfully downloaded")
             download_start.config(state="normal")
