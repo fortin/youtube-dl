@@ -3,8 +3,20 @@ import tkinter as tk
 from pyyoutube import Api
 from pytube import YouTube
 from threading import Thread
-from tkinter import messagebox
+from tkinter import messagebox #, ttk
 from decouple import config
+
+
+# def update_progress_label():
+#     return f"Current Progress: {pb['value']}%"
+
+
+# def progress():
+#     if pb['value'] < 100:
+#         pb['value'] += 20
+#         value_label['text'] = update_progress_label()
+#     else:
+#         showinfo(message='The progress completed!')
 
 
 def get_list_videos():
@@ -42,6 +54,8 @@ def threading():
 def download_videos():
     download_start.config(state="disabled")
     get_videos.config(state="disabled")
+    video_count = len(list_box.curselection())
+    cnt = 1
 
     # Iterate through all selected videos
     for i in list_box.curselection():
@@ -55,23 +69,27 @@ def download_videos():
             filters = yt_obj.streams.filter(progressive=True, file_extension="mp4")
             
             # download the highest quality video
-            filters.get_highest_resolution().download("Downloads/YouTube/")
+            filters.get_highest_resolution().download("/Users/antonio/Downloads/YouTube/")
 
-            messagebox.showinfo("Success", "Video Successfully downloaded")
+            messagebox.showinfo("Success", f"{cnt}/{video_count} videos downloaded!")
+            
             download_start.config(state="normal")
             get_videos.config(state="normal")
+            if cnt != video_count:
+                cnt += 1
 
         except Exception as e:
             print(repr(e))
             break
-
+            
+    messagebox.showinfo("Success", f"All videos downloaded!")
 
 
 
 # Create Object
 root = tk.Tk()
 # Set geometry
-root.geometry("400x400")
+root.geometry("400x500")
 
 # Add Label
 tk.Label(root, text="Youtube Playlist Downloader", font="italic 15 bold").pack(pady=10)
@@ -93,6 +111,25 @@ list_box.pack(expand=tk.YES, fill="both")
 list_box.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=list_box.yview)
 
+
+# progress bar
+# pb = ttk.Progressbar(
+#     root,
+#     orient='horizontal',
+#     mode='determinate',
+#     length=280
+# )
+
+# place the progress bar
+# pb.pack(pady=20)
+
+# label
+# value_label = ttk.Label(root, text=update_progress_label())
+# value_label.pack(pady=20)
+
+# download_start = ttk.Button(
+#     root, text="Download Start", command=lambda: [threading, pb.start], state=tk.DISABLED
+# )
 download_start = tk.Button(
     root, text="Download Start", command=threading, state=tk.DISABLED
 )
